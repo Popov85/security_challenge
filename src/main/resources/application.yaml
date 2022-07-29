@@ -1,0 +1,27 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: social-login
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 226202107254-dkqkn4hv6jf7gtotol0vso9rh690ku2j.apps.googleusercontent.com
+            client-secret: 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
+security:
+  jwt:
+    key-store: classpath:keystore.jks
+    key-store-password: letmein
+    key-pair-alias: mytestkey
+    key-pair-password: changeme
+    clientId: clientId
+    secret: secret
+    grant_type: password
+    auth_host: ${AUTH_HOST}
+logging:
+  level:
+    ROOT: WARN
+    org.springframework.security: TRACE
+    com.popov.*: DEBUG
