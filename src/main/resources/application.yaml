@@ -12,10 +12,10 @@ spring:
             client-secret: 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
 security:
   jwt:
-    key-store: classpath:keystore.jks
-    key-store-password: letmein
-    key-pair-alias: mytestkey
-    key-pair-password: changeme
+    key-store: classpath:my_key_store.jks
+    key-store-password: qwerty123456
+    key-pair-alias: my_key_store
+    key-pair-password: qwerty123456
     clientId: clientId
     secret: secret
     grant_type: password
