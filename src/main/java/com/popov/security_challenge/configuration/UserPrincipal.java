@@ -1,10 +1,11 @@
 package com.popov.security_challenge.configuration;
 
+import com.popov.security_challenge.repository.entity.Role;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.security.Principal;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Set;
 
 public class UserPrincipal implements Principal {
 
@@ -20,15 +21,15 @@ public class UserPrincipal implements Principal {
 
     private final String company;
 
-    private final UserRole role;
+    private final Set<Role> roles;
 
-    public UserPrincipal(Long userId, String username, Long companyId, String company, UserRole role) {
+    public UserPrincipal(Long userId, String username, Long companyId, String company, Set<Role> roles) {
         this.userId = userId;
         this.username = username;
         this.companyId = companyId;
         this.company = company;
-        this.role = role;
-        this.grantedAuthorities = Collections.singleton(role);
+        this.roles = roles;
+        this.grantedAuthorities = roles;
     }
 
     @Override
@@ -72,8 +73,8 @@ public class UserPrincipal implements Principal {
         return company;
     }
 
-    public UserRole getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     @Override
@@ -83,7 +84,7 @@ public class UserPrincipal implements Principal {
                 "username='" + username + '\'' +
                 "companyId='" + companyId + '\'' +
                 "company='" + company + '\'' +
-                ", grantedAuthorities=" + grantedAuthorities +
+                ", roles=" + roles +
                 '}';
     }
 }

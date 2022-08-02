@@ -6,9 +6,9 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.annotation.PostConstruct;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CustomJwtAccessTokenConverter extends JwtAccessTokenConverter {
 
@@ -18,7 +18,8 @@ public class CustomJwtAccessTokenConverter extends JwtAccessTokenConverter {
         LoginUserPrincipal user
                 = (LoginUserPrincipal) authentication.getPrincipal();
         additionalInfo.put("user_id", user.getUserId());
-        additionalInfo.put("authorities", Collections.singleton(user.getRole().toString().toUpperCase()));
+        additionalInfo.put("authorities", user.getRoles()
+                .stream().map(r->r.getName()).collect(Collectors.toSet()));
         additionalInfo.put("company", user.getCompany());
         additionalInfo.put("company_id", user.getCompanyId());
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);

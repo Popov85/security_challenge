@@ -18,16 +18,14 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public boolean isAdmin() {
         Collection<? extends GrantedAuthority> authorities = getAuthentication().getAuthorities();
-        return authorities.contains(UserRole.ROLE_SUPER_ADMIN)
-                || authorities.contains(UserRole.ROLE_ADMIN);
+        return authorities.contains("ROLE_ADMIN");
     }
 
     @Override
     public boolean isSuperAdmin() {
         Collection<? extends GrantedAuthority> authorities = getAuthentication().getAuthorities();
-        return authorities.contains(UserRole.ROLE_SUPER_ADMIN);
+        return authorities.contains("ROLE_ADMIN");
     }
-
 
     private Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();

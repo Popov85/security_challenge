@@ -8,9 +8,6 @@ import java.security.KeyPair;
 
 @Configuration
 public class CustomTokenStoreConfiguration {
-
-    private final AuthService authService;
-
     private final SecurityProperties securityProperties;
 
     private final CustomJwtTokenDecoder customJwtTokenDecoder;
@@ -18,12 +15,9 @@ public class CustomTokenStoreConfiguration {
     private final RefreshTokenRepository refreshTokenRepository;
 
 
-
-    public CustomTokenStoreConfiguration(AuthService authService,
-                                         SecurityProperties securityProperties,
+    public CustomTokenStoreConfiguration(SecurityProperties securityProperties,
                                          CustomJwtTokenDecoder customJwtTokenDecoder,
                                          RefreshTokenRepository refreshTokenRepository) {
-        this.authService = authService;
         this.securityProperties = securityProperties;
         this.customJwtTokenDecoder = customJwtTokenDecoder;
         this.refreshTokenRepository=refreshTokenRepository;
@@ -32,7 +26,7 @@ public class CustomTokenStoreConfiguration {
     @Bean
     public CustomRefreshTokenStore tokenStore() {
         // Replace with in-memory impl if needed!
-        return new CustomJdbcJwtTokenStore(authService,
+        return new CustomJdbcJwtTokenStore(
                 customJwtTokenDecoder,
                 refreshTokenRepository,
                 jwtAccessTokenConverter());

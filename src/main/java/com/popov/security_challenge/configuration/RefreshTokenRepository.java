@@ -1,10 +1,7 @@
 package com.popov.security_challenge.configuration;
 
 public interface RefreshTokenRepository {
+    public String deleteById(String token);
 
-    public boolean existsById(String token);
-
-    public void deleteById(String token);
-
-    public void save(RefreshToken token);
+    public void save(CustomJwtTokenDecoder.JwtPrincipal jwtPrincipal, String tokenValue);
 }

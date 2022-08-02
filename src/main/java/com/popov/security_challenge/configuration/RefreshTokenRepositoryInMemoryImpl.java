@@ -1,29 +1,43 @@
 package com.popov.security_challenge.configuration;
 
+import com.popov.security_challenge.repository.CredentialsRepository;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class RefreshTokenRepositoryInMemoryImpl implements RefreshTokenRepository {
+    private static final String KEY = "TN3LP28WSD";
 
-    private final Map<String, RefreshToken> repo = new HashMap<>();
+    // K - MD5 hashed refresh token value, V - bare refresh token value
+    private final Map<String, String> inMemoryRepository = new ConcurrentHashMap<>();
 
-    @Override
-    public boolean existsById(String token) {
-        return repo.get(token)!=null;
+    private final CredentialsRepository credentialsRepository;
+
+    public RefreshTokenRepositoryInMemoryImpl(CredentialsRepository credentialsRepository) {
+        this.credentialsRepository = credentialsRepository;
     }
 
     @Override
-    public void deleteById(String token) {
-        repo.remove(token);
-        return;
+    public String deleteById(String token) {
+        String encodedToken = toMD5Hash(token);
+        String removed =
+                inMemoryRepository.remove(encodedToken);
+        return removed;
     }
 
     @Override
-    public void save(RefreshToken token) {
-        repo.put(token.getRefreshToken(), token);
+    public void save(CustomJwtTokenDecoder.JwtPrincipal jwtPrincipal, String refreshTokenValue) {
+        Long userId = jwtPrincipal.getUserId();
+        if (!credentialsRepository.existsById(userId))
+                throw new SecurityException("User not found!");
+        inMemoryRepository.put(toMD5Hash(refreshTokenValue), refreshTokenValue);
         return;
+    }
+
+    private String toMD5Hash(String refreshToken) {
+        return DigestUtils.md5Hex(KEY+refreshToken);
     }
 }
