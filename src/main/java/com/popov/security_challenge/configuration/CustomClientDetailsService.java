@@ -15,13 +15,12 @@ import java.util.*;
 @Service
 @Primary
 /**
- * Clients are usually stored in a DB, if we have the only client, in-memory is ok!
+ * Clients are usually stored in a DB, if we have the only client, hardcoded is ok!
  */
 public class CustomClientDetailsService implements ClientDetailsService {
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-        log.debug("CustomClientDetailsService in action ... "+clientId);
            return new ClientDetails() {
                @Override
                public String getClientId() {
@@ -70,12 +69,12 @@ public class CustomClientDetailsService implements ClientDetailsService {
 
                @Override
                public Integer getAccessTokenValiditySeconds() {
-                   return 5000;
+                   return 100;
                }
 
                @Override
                public Integer getRefreshTokenValiditySeconds() {
-                   return 10000;
+                   return 100;
                }
 
                @Override

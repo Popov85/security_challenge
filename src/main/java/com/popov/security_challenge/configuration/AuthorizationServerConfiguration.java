@@ -1,5 +1,6 @@
 package com.popov.security_challenge.configuration;
 
+import com.popov.security_challenge.web.exception.CustomExceptionTranslator;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,18 +51,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient("clientId")
-                .authorizedGrantTypes("password","refresh_token","client_credentials")
-                .authorities("ROLE_CLIENT")
-                .secret("$2a$10$vCXMWCn7fDZWOcLnIEhmK.74dvK1Eh8ae2WrWlhr2ETPLoxQctN4.")
-                .scopes("read","write")
-                .accessTokenValiditySeconds(1000)
-                .refreshTokenValiditySeconds(10000)
-                .and()
-                .withClient("clientId2"); // TODO to be continued
-//        clients
-//                .withClientDetails(this.clientDetailsService);
+        clients.withClientDetails(this.clientDetailsService);
     }
 
     @Override

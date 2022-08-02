@@ -2,6 +2,7 @@ package com.popov.security_challenge.configuration;
 
 
 import com.popov.security_challenge.configuration.refresh_token.RefreshTokenRepository;
+import com.popov.security_challenge.configuration.security_principals.JwtPrincipal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
@@ -13,7 +14,6 @@ import java.util.Objects;
 
 /**
  * Jdbc implementation of refresh tokens store (client requirement)
- * This is rather slow (up to 1000 users) but persistent impl.
  */
 @Slf4j
 public class CustomJwtRefreshTokenStore extends JwtTokenStore {
@@ -46,9 +46,9 @@ public class CustomJwtRefreshTokenStore extends JwtTokenStore {
         OAuth2RefreshToken refreshToken = token.getRefreshToken();
         if (Objects.nonNull(refreshToken)) {
             String refreshTokenValue = refreshToken.getValue();
-            CustomJwtTokenDecoder.JwtPrincipal jwtPrincipal
+            JwtPrincipal jwtPrincipal
                     = customJwtTokenDecoder.parseJwtToken(refreshTokenValue);
-            refreshTokenRepository.save(jwtPrincipal, refreshTokenValue);
+            refreshTokenRepository.save(jwtPrincipal.getUserId(), refreshTokenValue);
         }
     }
 }

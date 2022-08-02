@@ -1,4 +1,4 @@
-package com.popov.security_challenge.configuration;
+package com.popov.security_challenge.configuration.security_principals;
 
 import com.popov.security_challenge.repository.entity.Role;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,4 +1,4 @@
-package com.popov.security_challenge.configuration;
+package com.popov.security_challenge.configuration.security_properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;

@@ -1,4 +1,4 @@
-package com.popov.security_challenge.configuration;
+package com.popov.security_challenge.web.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

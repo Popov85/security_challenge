@@ -1,9 +1,12 @@
+INSERT INTO company (name) VALUES ('IBM');
+INSERT INTO company (name) VALUES ('Samsung');
+
 INSERT INTO role (name) VALUES ('ROLE_USER');
 INSERT INTO role (name) VALUES ('ROLE_API');
 INSERT INTO role (name) VALUES ('ROLE_ADMIN');
 
-INSERT INTO users (name, date_of_birth, active) VALUES ('Mr. White', '1982-09-01', true);
-INSERT INTO users (name, date_of_birth, active) VALUES ('Mr. Black', '1989-04-11', true);
+INSERT INTO users (name, company_id, date_of_birth, active) VALUES ('Mr. White', 1, '1982-09-01', true);
+INSERT INTO users (name, company_id, date_of_birth, active) VALUES ('Mr. Black', 2, '1989-04-11', true);
 
 INSERT INTO users_role (user_id, role_id) VALUES (1,1);
 INSERT INTO users_role (user_id, role_id) VALUES (1,2);

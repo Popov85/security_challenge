@@ -1,18 +1,27 @@
 CREATE SCHEMA security_challenge;
 
+CREATE TABLE company(
+    id IDENTITY PRIMARY KEY,
+    name VARCHAR(500) NOT NULL
+);
+
+ALTER TABLE company
+    ADD CONSTRAINT COMPANY_UNIQUE UNIQUE (name);
+
 CREATE TABLE users(
     id IDENTITY PRIMARY KEY,
-    name          VARCHAR(500),
-    date_of_birth DATE,
+    company_id BIGINT,
+    name          VARCHAR(500) NOT NULL,
+    date_of_birth DATE NOT NULL,
     active        BOOLEAN DEFAULT true
 );
 
 ALTER TABLE users
-    ADD CONSTRAINT USERNAME_UNIQUE UNIQUE (name);
+    ADD CONSTRAINT USERSNAME_UNIQUE UNIQUE (name);
 
 CREATE TABLE role(
     id IDENTITY PRIMARY KEY,
-    name VARCHAR(500)
+    name VARCHAR(500) NOT NULL
 );
 
 ALTER TABLE role
@@ -38,6 +47,9 @@ CREATE TABLE credentials (
             PRIMARY KEY
         CONSTRAINT credentials_user_id_fk
             REFERENCES users,
-    username varchar(255),
-    password varchar(255)
+    username varchar(255) NOT NULL,
+    password varchar(255) NOT NULL
 );
+
+ALTER TABLE credentials
+    ADD CONSTRAINT USERNAME_UNIQUE UNIQUE (username);

@@ -25,6 +25,10 @@ public class AppUser {
     @Column(name = "active")
     private Boolean active;
 
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_role",
             joinColumns = @JoinColumn(name = "user_id"),

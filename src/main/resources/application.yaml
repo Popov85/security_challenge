@@ -2,14 +2,14 @@ server:
   port: 8080
 spring:
   application:
-    name: social-login
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 226202107254-dkqkn4hv6jf7gtotol0vso9rh690ku2j.apps.googleusercontent.com
-            client-secret: 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
+    name: jwt-token-security
+    datasource:
+      url: jdbc:h2:mem:security
+      username: test
+      password: test
+      driverClassName: org.h2.Driver
+    jpa:
+      spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 security:
   jwt:
     key-store: classpath:my_key_store.jks

@@ -1,6 +1,5 @@
 package com.popov.security_challenge.configuration.refresh_token;
 
-import com.popov.security_challenge.configuration.CustomJwtTokenDecoder;
 import com.popov.security_challenge.repository.CredentialsRepository;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Component;
@@ -22,19 +21,18 @@ public class RefreshTokenRepositoryInMemoryImpl implements RefreshTokenRepositor
     }
 
     @Override
-    public String deleteById(String token) {
-        String encodedToken = toMD5Hash(token);
+    public String deleteById(String refreshToken) {
+        String encodedToken = toMD5Hash(refreshToken);
         String removed =
                 inMemoryRepository.remove(encodedToken);
         return removed;
     }
 
     @Override
-    public void save(CustomJwtTokenDecoder.JwtPrincipal jwtPrincipal, String refreshTokenValue) {
-        Long userId = jwtPrincipal.getUserId();
+    public void save(Long userId, String refreshToken) {
         if (!credentialsRepository.existsById(userId))
                 throw new SecurityException("User not found!");
-        inMemoryRepository.put(toMD5Hash(refreshTokenValue), refreshTokenValue);
+        inMemoryRepository.put(toMD5Hash(refreshToken), refreshToken);
         return;
     }
 

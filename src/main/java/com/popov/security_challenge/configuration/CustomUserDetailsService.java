@@ -1,10 +1,10 @@
 package com.popov.security_challenge.configuration;
 
+import com.popov.security_challenge.configuration.security_principals.LoginUserPrincipal;
 import com.popov.security_challenge.repository.CredentialsRepository;
+import com.popov.security_challenge.repository.entity.AppUser;
 import com.popov.security_challenge.repository.entity.Credentials;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,8 +16,6 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
     private final CredentialsRepository credentialsRepository;
 
@@ -32,10 +30,12 @@ public class CustomUserDetailsService implements UserDetailsService {
                 credentialsRepository.findByUsername(username);
         Credentials credentials =
                 byUsername.orElseThrow(() -> new SecurityException("User not found!"));
+        AppUser user = credentials.getUser();
         LoginUserPrincipal userPrincipal =
                 new LoginUserPrincipal(credentials.getUserId(),
-                        credentials.getUsername(), credentials.getPassword(), 1L, "IBM", credentials.getUser().getRoles());
-        LOGGER.debug("loadUserByUsername, UserPrincipal = {}", userPrincipal);
+                        credentials.getUsername(), credentials.getPassword(),
+                        user.getCompany().getId(), user.getCompany().getName(), user.getRoles());
+        log.debug("LoginUserPrincipal = {}", userPrincipal);
         return userPrincipal;
     }
 }

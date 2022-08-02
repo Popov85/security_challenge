@@ -1,6 +1,6 @@
-package com.popov.security_challenge.configuration.service;
+package com.popov.security_challenge.configuration.auth_service;
 
-import com.popov.security_challenge.configuration.UserPrincipal;
+import com.popov.security_challenge.configuration.security_principals.UserPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

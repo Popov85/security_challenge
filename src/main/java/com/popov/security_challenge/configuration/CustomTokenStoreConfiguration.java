@@ -1,5 +1,6 @@
 package com.popov.security_challenge.configuration;
 
+import com.popov.security_challenge.configuration.security_properties.SecurityProperties;
 import com.popov.security_challenge.configuration.refresh_token.RefreshTokenRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,5 +1,6 @@
 package com.popov.security_challenge.configuration;
 
+import com.popov.security_challenge.configuration.security_principals.LoginUserPrincipal;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -10,6 +11,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Used to add more params to JWT token
+ */
 public class CustomJwtAccessTokenConverter extends JwtAccessTokenConverter {
 
     @Override

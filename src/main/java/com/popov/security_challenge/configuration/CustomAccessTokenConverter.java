@@ -14,7 +14,7 @@ public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {
     @Override
     public Map<String, ?> convertAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
         Map<String, ?> stringMap = super.convertAccessToken(token, authentication);
-        //stringMap.remove("client_id");
+        //stringMap.remove("client_id"); // Cannot be removed! For refresh token!
         stringMap.remove(OAuth2AccessToken.SCOPE);
         return stringMap;
     }
