@@ -25,7 +25,7 @@ public class CustomJwtTokenDecoder {
         this.securityProperties = securityProperties;
     }
 
-    static class JwtPrincipal {
+    public static class JwtPrincipal {
         private final Long userId;
         private final String username;
         private final LocalDateTime expirationDate;

@@ -1,5 +1,6 @@
-package com.popov.security_challenge.configuration;
+package com.popov.security_challenge.configuration.refresh_token;
 
+import com.popov.security_challenge.configuration.CustomJwtTokenDecoder;
 import com.popov.security_challenge.repository.CredentialsRepository;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Component;

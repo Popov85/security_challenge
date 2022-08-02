@@ -1,6 +1,7 @@
 package com.popov.security_challenge.configuration;
 
 
+import com.popov.security_challenge.configuration.refresh_token.RefreshTokenRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
@@ -15,15 +16,15 @@ import java.util.Objects;
  * This is rather slow (up to 1000 users) but persistent impl.
  */
 @Slf4j
-public class CustomJdbcJwtTokenStore extends JwtTokenStore implements CustomRefreshTokenStore {
+public class CustomJwtRefreshTokenStore extends JwtTokenStore {
 
     private final CustomJwtTokenDecoder customJwtTokenDecoder;
 
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public CustomJdbcJwtTokenStore(CustomJwtTokenDecoder customJwtTokenDecoder,
-                                   RefreshTokenRepository refreshTokenRepository,
-                                   JwtAccessTokenConverter jwtTokenEnhancer) {
+    public CustomJwtRefreshTokenStore(CustomJwtTokenDecoder customJwtTokenDecoder,
+                                      RefreshTokenRepository refreshTokenRepository,
+                                      JwtAccessTokenConverter jwtTokenEnhancer) {
         super(jwtTokenEnhancer);
         this.customJwtTokenDecoder = customJwtTokenDecoder;
         this.refreshTokenRepository = refreshTokenRepository;
@@ -49,10 +50,5 @@ public class CustomJdbcJwtTokenStore extends JwtTokenStore implements CustomRefr
                     = customJwtTokenDecoder.parseJwtToken(refreshTokenValue);
             refreshTokenRepository.save(jwtPrincipal, refreshTokenValue);
         }
-    }
-
-    @Override
-    public void removeRefreshToken(String tokenValue) {
-        refreshTokenRepository.deleteById(tokenValue);
     }
 }

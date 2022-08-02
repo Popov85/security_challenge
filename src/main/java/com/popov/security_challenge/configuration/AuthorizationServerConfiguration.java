@@ -26,7 +26,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     private final CustomClientDetailsService clientDetailsService;
 
-    private final CustomRefreshTokenStore customRefreshTokenStore;
+    private final CustomJwtRefreshTokenStore customRefreshTokenStore;
 
     private final CustomJwtAccessTokenConverter customJwtAccessTokenConverter;
 
@@ -36,7 +36,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                                             AuthenticationManager authenticationManager,
                                             CustomUserDetailsService userDetailsService,
                                             CustomClientDetailsService clientDetailsService,
-                                            CustomRefreshTokenStore customRefreshTokenStore,
+                                            CustomJwtRefreshTokenStore customRefreshTokenStore,
                                             CustomJwtAccessTokenConverter customJwtAccessTokenConverter,
                                             CustomPreBasicAuthenticationFilter customPreBasicAuthenticationFilter) {
         this.passwordEncoder = passwordEncoder;

@@ -14,6 +14,9 @@ import java.util.Base64;
 
 @Slf4j
 @Component
+/**
+ * Used to avoid storing clientId and secret in client app!
+ */
 public class CustomPreBasicAuthenticationFilter extends OncePerRequestFilter {
 
     public static final String AUTH_HOST="/oauth/token";

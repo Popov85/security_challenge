@@ -11,19 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(path = "/api")
-@PreAuthorize("hasRole('ROLE_API_USER')")
-public class ApiController {
-
-    @GetMapping(value = "/echo/{name}", produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> echo(@PathVariable String name) {
-        log.debug("Requested echo name= {}", name);
-        return ResponseEntity.ok(name);
-    }
+@RequestMapping(path = "/admin")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+public class AdminController {
 
     @GetMapping(value = "/ok", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> ok() {
-        log.debug("Requested ok page");
-        return ResponseEntity.ok("OK");
+        log.debug("Requested admin page");
+        return ResponseEntity.ok("Admin");
     }
 }

@@ -1,5 +1,6 @@
 package com.popov.security_challenge.configuration;
 
+import com.popov.security_challenge.configuration.refresh_token.RefreshTokenRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
@@ -8,6 +9,7 @@ import java.security.KeyPair;
 
 @Configuration
 public class CustomTokenStoreConfiguration {
+
     private final SecurityProperties securityProperties;
 
     private final CustomJwtTokenDecoder customJwtTokenDecoder;
@@ -24,12 +26,9 @@ public class CustomTokenStoreConfiguration {
     }
 
     @Bean
-    public CustomRefreshTokenStore tokenStore() {
-        // Replace with in-memory impl if needed!
-        return new CustomJdbcJwtTokenStore(
-                customJwtTokenDecoder,
-                refreshTokenRepository,
-                jwtAccessTokenConverter());
+    public CustomJwtRefreshTokenStore tokenStore() {
+        // Replace with Redis refreshTokenRepository impl. if needed!
+        return new CustomJwtRefreshTokenStore(customJwtTokenDecoder, refreshTokenRepository, jwtAccessTokenConverter());
     }
 
     @Bean

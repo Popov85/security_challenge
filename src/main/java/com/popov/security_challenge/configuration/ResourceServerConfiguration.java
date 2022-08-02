@@ -21,8 +21,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(final ResourceServerSecurityConfigurer resources) {
-        resources
-                .tokenStore(tokenStore);
+        resources.tokenStore(tokenStore);
     }
 
     @Override
@@ -31,7 +30,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers("/*").permitAll()
-                .antMatchers("/api/**").hasRole("ADMIN")
+                .antMatchers("/api/**").hasAnyRole("USER", "API_USER", "ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
     }
 

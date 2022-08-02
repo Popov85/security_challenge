@@ -14,6 +14,9 @@ import java.util.*;
 @Slf4j
 @Service
 @Primary
+/**
+ * Clients are usually stored in a DB, if we have the only client, in-memory is ok!
+ */
 public class CustomClientDetailsService implements ClientDetailsService {
 
     @Override

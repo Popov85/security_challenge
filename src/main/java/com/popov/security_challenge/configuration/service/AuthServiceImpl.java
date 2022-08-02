@@ -1,5 +1,6 @@
-package com.popov.security_challenge.configuration;
+package com.popov.security_challenge.configuration.service;
 
+import com.popov.security_challenge.configuration.UserPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,9 +23,9 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public boolean isSuperAdmin() {
+    public boolean isApiUser() {
         Collection<? extends GrantedAuthority> authorities = getAuthentication().getAuthorities();
-        return authorities.contains("ROLE_ADMIN");
+        return authorities.contains("ROLE_API_USER");
     }
 
     private Authentication getAuthentication() {
