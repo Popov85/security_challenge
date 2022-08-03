@@ -1,12 +1,14 @@
 package com.popov.security_challenge.configuration.security_principals;
 
 import com.popov.security_challenge.repository.entity.Role;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Set;
 
+@Data
 public class UserPrincipal implements Principal {
 
     private final String username;

@@ -1,30 +1,48 @@
 package com.popov.security_challenge.configuration;
 
 
+import com.popov.security_challenge.configuration.security_properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @Primary
 /**
- * Clients are usually stored in a DB, if we have the only client, hardcoded is ok!
+ * Clients are usually stored in a DB, if we have the only client, hardcoded is probably ok!
+ * @see <a href="https://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/ClientDetails.html#isSecretRequired()">Doc</a>
  */
 public class CustomClientDetailsService implements ClientDetailsService {
 
+    private final SecurityProperties securityProperties;
+
+    private final PasswordEncoder encoder;
+
+    public CustomClientDetailsService(SecurityProperties securityProperties, PasswordEncoder encoder) {
+        this.securityProperties = securityProperties;
+        this.encoder = encoder;
+    }
+
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
+        //log.debug("Loading a client, clientId = {}", clientId);
+        SecurityProperties.JwtProperties jwt = securityProperties.getJwt();
            return new ClientDetails() {
                @Override
                public String getClientId() {
-                   return "clientId";
+                   return jwt.getClientId();
                }
 
                @Override
@@ -39,7 +57,7 @@ public class CustomClientDetailsService implements ClientDetailsService {
 
                @Override
                public String getClientSecret() {
-                   return "$2a$10$vCXMWCn7fDZWOcLnIEhmK.74dvK1Eh8ae2WrWlhr2ETPLoxQctN4.";
+                   return encoder.encode(jwt.getSecret());
                }
 
                @Override
@@ -49,12 +67,12 @@ public class CustomClientDetailsService implements ClientDetailsService {
 
                @Override
                public Set<String> getScope() {
-                   return new HashSet<>(Arrays.asList("read","write"));
+                   return jwt.getScopes();
                }
 
                @Override
                public Set<String> getAuthorizedGrantTypes() {
-                   return new HashSet<>(Arrays.asList("password","refresh_token","client_credentials"));
+                   return jwt.getAuthorizedGrantTypes();
                }
 
                @Override
@@ -64,17 +82,18 @@ public class CustomClientDetailsService implements ClientDetailsService {
 
                @Override
                public Collection<GrantedAuthority> getAuthorities() {
-                   return Arrays.asList((GrantedAuthority) () -> "ROLE_CLIENT");
+                   return jwt.getAuthorities().stream()
+                           .map(a-> (GrantedAuthority) () -> a).collect(Collectors.toList());
                }
 
                @Override
                public Integer getAccessTokenValiditySeconds() {
-                   return 100;
+                   return jwt.getAccessTokenValiditySeconds();
                }
 
                @Override
                public Integer getRefreshTokenValiditySeconds() {
-                   return 100;
+                   return jwt.getRefreshTokenValiditySeconds();
                }
 
                @Override

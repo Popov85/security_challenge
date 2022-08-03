@@ -16,9 +16,20 @@ security:
     key-store-password: qwerty123456
     key-pair-alias: my_key_store
     key-pair-password: qwerty123456
-    clientId: clientId
-    secret: secret
+    clientId: GWMZP9RQOP1Y40
+    secret: fO8WqqVW
+    scopes:
+      - read
+      - write
+    authorizedGrantTypes:
+      - password
+      - refresh_token
+      - client_credentials
+    authorities:
+      - ROLE_CLIENT
     grant_type: password
+    accessTokenValiditySeconds: 1000
+    refreshTokenValiditySeconds: 10000
     auth_host: ${AUTH_HOST}
 logging:
   level:

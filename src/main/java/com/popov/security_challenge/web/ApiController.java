@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping(path = "/api")
-@PreAuthorize("hasRole('ROLE_API_USER')")
+@PreAuthorize("hasRole('ROLE_API')")
 public class ApiController {
 
     @GetMapping(value = "/echo/{name}", produces = MediaType.TEXT_PLAIN_VALUE)

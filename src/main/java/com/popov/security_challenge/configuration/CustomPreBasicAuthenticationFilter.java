@@ -16,7 +16,7 @@ import java.util.Base64;
 @Slf4j
 @Component
 /**
- * Used to avoid storing clientId and secret in client app!
+ * Used to avoid storing clientId and secret in client app (if it is the only app!)
  */
 public class CustomPreBasicAuthenticationFilter extends OncePerRequestFilter {
 
@@ -42,7 +42,7 @@ public class CustomPreBasicAuthenticationFilter extends OncePerRequestFilter {
 
         @Override
         public String getHeader(String name) {
-            log.debug("securityProperties = {}", securityProperties);
+            //log.debug("securityProperties = {}", securityProperties);
             if ("Authorization".equals(name)) {
                 //Customizing header for each /oauth/token request
                 SecurityProperties.JwtProperties jwt = securityProperties.getJwt();

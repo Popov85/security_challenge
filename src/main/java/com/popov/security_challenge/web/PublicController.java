@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class PublicController {
-
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> get() {
         return ResponseEntity.ok("Public resource");
